@@ -1,15 +1,26 @@
-
 package br.edu.iff.projetoSGCI.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Objects;
 
-public abstract class Pessoa implements Serializable{
+public class InformacaoHistorico implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private Long id;
-    private String login, senha, nome;
+    private String texto;
+    private Calendar data;
+    
+    private Atendente atendente;
 
+    public Atendente getAtendente() {
+        return atendente;
+    }
+
+    public void setAtendente(Atendente atendente) {
+        this.atendente = atendente;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -18,34 +29,26 @@ public abstract class Pessoa implements Serializable{
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
-    public String getSenha() {
-        return senha;
+    public Calendar getData() {
+        return data;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setData(Calendar data) {
+        this.data = data;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 61 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -60,12 +63,13 @@ public abstract class Pessoa implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Pessoa other = (Pessoa) obj;
+        final InformacaoHistorico other = (InformacaoHistorico) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+    
     
     
 }
