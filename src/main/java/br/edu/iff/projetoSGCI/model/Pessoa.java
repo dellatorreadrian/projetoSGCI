@@ -3,13 +3,30 @@ package br.edu.iff.projetoSGCI.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public abstract class Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String login, senha, nome;
+    
+    @Column(nullable = false, length = 10, unique = true, updatable = false)
+    private String login;
+    
+    @Column(nullable = false)
+    private String senha;
+    
+    @Column(nullable = false, length = 50)
+    private String nome;
 
+    
     public Long getId() {
         return id;
     }

@@ -1,10 +1,10 @@
 package br.edu.iff.projetoSGCI.model;
 
 public enum StatusChamadoEnum {
-    Designacao,
-    Designado,
-    Andamento,
-    Pendente,
-    Encerrado,
-    Cancelado
+    DESIGNACAO,
+    DESIGNADO,
+    ANDAMENTO,
+    PENDENTE,
+    ENCERRADO,
+    CANCELADO
 }

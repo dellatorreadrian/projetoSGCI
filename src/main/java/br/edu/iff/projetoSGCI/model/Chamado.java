@@ -1,20 +1,47 @@
 package br.edu.iff.projetoSGCI.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
 public class Chamado implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descricao, conclusao;
+    
+    @Column(nullable = false, length = 350, updatable = false)
+    private String descricao;
+
+    @Column(length = 350, updatable = false)
+    private String conclusao;
+    
+    @Column(nullable = false, length = 15)
+    @Enumerated(EnumType.STRING)
     private StatusChamadoEnum status;
+    
+    @Column(nullable = false, length = 5)
+    @Enumerated(EnumType.STRING)
     private CriticidadeEnum criticidade;
+    
+    @Column (nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar prazo, dataAbertura;
     
-    private List<InformacaoHistorico> informacoesHistorico;
+    private List<InformacaoHistorico> informacoesHistorico  = new ArrayList<InformacaoHistorico>();
     private Servidor servidor;
     private Atendente atendente;
     private Cliente cliente;

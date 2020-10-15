@@ -1,17 +1,31 @@
 package br.edu.iff.projetoSGCI.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 public class Servidor implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false, length = 20)
     private String nome, ip;
+    
+    @Column(nullable = false, length = 7)
+    @Enumerated(EnumType.STRING)
     private StatusServidorEnum status;
     
-    private List<Chamado> chamados;
+    private List<Chamado> chamados = new ArrayList<Chamado>();
 
     public List<Chamado> getChamados() {
         return chamados;
