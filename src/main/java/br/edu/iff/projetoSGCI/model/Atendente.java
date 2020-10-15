@@ -1,11 +1,13 @@
 package br.edu.iff.projetoSGCI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Atendente extends Pessoa{
@@ -14,6 +16,8 @@ public class Atendente extends Pessoa{
     @Enumerated(EnumType.STRING)
     private NivelAtendenteEnum nivel;
     
+    @JsonBackReference
+    @OneToMany(mappedBy = "atendente")
     private List<Chamado> chamados  = new ArrayList<Chamado>();
 
     public List<Chamado> getChamados() {

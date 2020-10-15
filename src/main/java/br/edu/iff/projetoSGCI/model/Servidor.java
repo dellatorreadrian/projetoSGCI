@@ -1,16 +1,21 @@
 package br.edu.iff.projetoSGCI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
 public class Servidor implements Serializable{
     private static final long serialVersionUID = 1L;
     
@@ -25,6 +30,8 @@ public class Servidor implements Serializable{
     @Enumerated(EnumType.STRING)
     private StatusServidorEnum status;
     
+    @JsonBackReference
+    @OneToMany(mappedBy = "servidor")
     private List<Chamado> chamados = new ArrayList<Chamado>();
 
     public List<Chamado> getChamados() {

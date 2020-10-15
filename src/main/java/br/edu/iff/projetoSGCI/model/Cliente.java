@@ -1,16 +1,20 @@
 package br.edu.iff.projetoSGCI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente extends Pessoa {
 
     @Column(nullable = false, length = 20)
     private String setor;
-
+    
+    @JsonBackReference
+    @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados = new ArrayList<Chamado>();
 
     public List<Chamado> getChamados() {
