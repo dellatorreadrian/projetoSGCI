@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class InformacaoHistorico implements Serializable{
@@ -20,13 +24,18 @@ public class InformacaoHistorico implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank(message = "Texto obrigatório.")
+    @Length(max=200, message = "Texto deve possuir no máximo 200 caracteres.")
     @Column(nullable = false, length = 200)
     private String texto;
     
-    @Column(nullable = false, length = 200)
+    @DateTimeFormat(pattern = "yyy-MM-dd")
+    @NotNull(message = "Data obrigatória.")
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data;
     
+    @NotNull(message = "Atendente obrigatório.")
     @ManyToOne
     private Atendente atendente;
 

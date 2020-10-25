@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Cliente extends Pessoa {
-
+   
+    @NotBlank(message = "Setor obrigatório.")
+    @Length(max=20, message = "Setor deve possuir no máximo 20 caracteres.")
     @Column(nullable = false, length = 20)
     private String setor;
     

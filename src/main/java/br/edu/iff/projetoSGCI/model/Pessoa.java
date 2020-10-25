@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -20,12 +22,18 @@ public abstract class Pessoa implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank(message = "Login obrigatório.")
+    @Length(max=10, message = "Login deve possuir no máximo 10 caracteres.")
     @Column(nullable = false, length = 10, unique = true, updatable = false)
     private String login;
     
+    @NotBlank(message = "Senha obrigatória.")
+    @Length(min=8, message = "Senha deve possuir no mínimo 8 caracteres.")
     @Column(nullable = false)
     private String senha;
     
+    @NotBlank(message = "Nome obrigatório.")
+    @Length(max=50, message = "Nome deve possuir no máximo 50 caracteres.")
     @Column(nullable = false, length = 50)
     private String nome;
 

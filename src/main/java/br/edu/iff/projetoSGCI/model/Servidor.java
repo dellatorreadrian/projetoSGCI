@@ -13,7 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Servidor implements Serializable{
@@ -23,9 +25,17 @@ public class Servidor implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank(message = "Nome obrigatório.")
+    @Length(max=20, message = "Nome deve possuir no máximo 20 caracteres.")
     @Column(nullable = false, length = 20)
-    private String nome, ip;
+    private String nome;
     
+    @NotBlank(message = "IP obrigatório.")
+    @Length(max=20, message = "IP deve possuir no máximo 20 caracteres.")
+    @Column(nullable = false, length = 20)
+    private String ip;
+    
+    @NotNull(message = "Login obrigatório.")
     @Column(nullable = false, length = 7)
     @Enumerated(EnumType.STRING)
     private StatusServidorEnum status;
