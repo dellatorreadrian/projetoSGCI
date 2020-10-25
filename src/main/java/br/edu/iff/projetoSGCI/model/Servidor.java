@@ -1,6 +1,6 @@
 package br.edu.iff.projetoSGCI.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Servidor implements Serializable{
     @Enumerated(EnumType.STRING)
     private StatusServidorEnum status;
     
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "servidor")
     private List<Chamado> chamados = new ArrayList<Chamado>();
 

@@ -1,6 +1,6 @@
 package br.edu.iff.projetoSGCI.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ public class Cliente extends Pessoa {
     @Column(nullable = false, length = 20)
     private String setor;
     
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados = new ArrayList<Chamado>();
 

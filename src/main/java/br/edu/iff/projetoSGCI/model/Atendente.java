@@ -1,6 +1,6 @@
 package br.edu.iff.projetoSGCI.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ public class Atendente extends Pessoa{
     @Enumerated(EnumType.STRING)
     private NivelAtendenteEnum nivel;
     
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "atendente")
     private List<Chamado> chamados  = new ArrayList<Chamado>();
 
