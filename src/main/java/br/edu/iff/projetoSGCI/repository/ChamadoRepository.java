@@ -16,8 +16,11 @@ import org.springframework.stereotype.Repository;
 public interface ChamadoRepository extends JpaRepository<Chamado, Long>{
     public List<Chamado> findByCriticidade(CriticidadeEnum criticidade, Pageable page);
     public List<Chamado> findByStatus(StatusChamadoEnum status, Pageable page);
-    public List<Chamado> findByAtendente(Atendente atendente, Pageable page);
-    public List<Chamado> findByCliente(Cliente cliente, Pageable page);
+    public List<Chamado> findByAtendente(Long atendenteId, Pageable page);
+    public List<Chamado> findByCliente(Long clienteId, Pageable page);
+    public List<Chamado> findByServidor(Long servidorId, Pageable page);
+    public List<Chamado> findByClienteAndAtendente(Long clienteId, Long atendenteId, Pageable page);
+    public List<Chamado> findByClienteAndAtendenteAndServidor(Long clienteId, Long atendenteId, Long servidorId, Pageable page);
     
     @Query("SELECT DISTINCT(c) FROM Chamado c WHERE (c.dataAbertura between :inicio AND :fim)")
     public List<Chamado> findChamadosAbertosEntreDatas(Calendar inicio, Calendar fim);
