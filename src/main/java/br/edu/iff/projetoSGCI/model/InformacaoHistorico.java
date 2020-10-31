@@ -29,7 +29,7 @@ public class InformacaoHistorico implements Serializable{
     @Column(nullable = false, length = 200)
     private String texto;
     
-    @DateTimeFormat(pattern = "yyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Data obrigatória.")
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

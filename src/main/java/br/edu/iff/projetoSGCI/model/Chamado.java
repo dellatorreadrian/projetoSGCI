@@ -1,6 +1,6 @@
 package br.edu.iff.projetoSGCI.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import br.edu.iff.projetoSGCI.annotation.DataChamadoValidation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,11 +22,11 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@DataChamadoValidation
 public class Chamado implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -58,13 +58,13 @@ public class Chamado implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar prazo;
     
-    @DateTimeFormat(pattern = "yyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Data de abertura obrigatória.")
     @Column (nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataAbertura;
     
-    @DateTimeFormat(pattern = "yyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Data de encerramento obrigatória.")
     @Column (nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,20 +75,17 @@ public class Chamado implements Serializable {
     private List<InformacaoHistorico> informacoesHistorico  = new ArrayList<InformacaoHistorico>();
     
     @Valid
-    @JsonManagedReference
     @ManyToOne
     @NotNull(message = "Chamado deve possuir 1 Servidor.")
     private Servidor servidor;
     
     @Valid
     @NotNull(message = "Chamado deve possuir 1 Atendente.")
-    @JsonManagedReference
     @ManyToOne
     private Atendente atendente;
     
     @Valid
     @NotNull(message = "Chamado deve possuir 1 Cliente.")
-    @JsonManagedReference
     @ManyToOne
     private Cliente cliente;
 
