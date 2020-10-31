@@ -65,8 +65,6 @@ public class Chamado implements Serializable {
     private Calendar dataAbertura;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Data de encerramento obrigatória.")
-    @Column (nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataEncerramento;
     
