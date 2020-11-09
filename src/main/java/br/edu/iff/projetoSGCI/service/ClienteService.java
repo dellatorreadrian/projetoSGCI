@@ -1,14 +1,15 @@
 package br.edu.iff.projetoSGCI.service;
 
 import br.edu.iff.projetoSGCI.model.Cliente;
-import br.edu.iff.projetoSGCI.model.Cliente;
 import br.edu.iff.projetoSGCI.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClienteService {
     @Autowired
     private ClienteRepository repo;
@@ -44,6 +45,7 @@ public class ClienteService {
         verificaExclusaoChamadosComClientes(obj);
         try {
             c.setLogin(obj.getLogin());
+            c.setSenha(obj.getSenha());
             return repo.save(c);    
         } catch(Exception e){
             throw new RuntimeException("Falha ao atualizar o Cliente.");

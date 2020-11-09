@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AtendenteService {
     @Autowired
     private AtendenteRepository repo;
@@ -43,6 +45,7 @@ public class AtendenteService {
         verificaExclusaoChamadosComAtendentes(obj);
         try {
             a.setLogin(obj.getLogin());
+            a.setSenha(obj.getSenha());
             return repo.save(a);    
         } catch(Exception e){
             throw new RuntimeException("Falha ao atualizar o Atendente.");
