@@ -1,6 +1,7 @@
 package br.edu.iff.projetoSGCI.model;
 
 import br.edu.iff.projetoSGCI.annotation.DataChamadoValidation;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,18 +54,22 @@ public class Chamado implements Serializable {
     @Enumerated(EnumType.STRING)
     private CriticidadeEnum criticidade;
     
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @NotNull(message = "Prazo obrigatório.")
     @Column (nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar prazo;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @NotNull(message = "Data de abertura obrigatória.")
     @Column (nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataAbertura;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataEncerramento;
     

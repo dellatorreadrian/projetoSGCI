@@ -24,10 +24,10 @@ public class ChamadoController {
     
     @GetMapping
     public ResponseEntity getAll(@RequestParam(name = "page", defaultValue="0", required = false) int page, 
-            @RequestParam(name = "page", defaultValue="0", required = false) int size, 
-            @RequestParam(name = "page", defaultValue="0", required = false) Long clienteId, 
-            @RequestParam(name = "page", defaultValue="0", required = false) Long atendenteId, 
-            @RequestParam(name = "page", defaultValue="0", required = false) Long servidorId){
+            @RequestParam(name = "size", defaultValue="10", required = false) int size, 
+            @RequestParam(name = "clienteId", defaultValue="0", required = false) Long clienteId, 
+            @RequestParam(name = "atendenteId", defaultValue="0", required = false) Long atendenteId, 
+            @RequestParam(name = "servidorId", defaultValue="0", required = false) Long servidorId){
         return ResponseEntity.ok(service.findAll(page, size, clienteId, atendenteId, servidorId));
     }
     

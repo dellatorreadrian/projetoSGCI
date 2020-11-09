@@ -1,5 +1,6 @@
 package br.edu.iff.projetoSGCI.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
@@ -30,6 +31,7 @@ public class InformacaoHistorico implements Serializable{
     private String texto;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @NotNull(message = "Data obrigatória.")
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
