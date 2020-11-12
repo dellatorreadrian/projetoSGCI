@@ -1,9 +1,11 @@
 package br.edu.iff.projetoSGCI.service;
 
+import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Cliente;
 import br.edu.iff.projetoSGCI.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,7 @@ public class ClienteService {
     public Cliente findById(Long id){
         Optional<Cliente> result = repo.findById(id);
         if(result.isEmpty()){
-            throw new RuntimeException("Cliente não encontrado pelo ID");
+            throw new NotFoundException("Cliente não encontrado pelo ID");
         }
         return result.get();
     }
@@ -48,6 +50,13 @@ public class ClienteService {
             c.setSenha(obj.getSenha());
             return repo.save(c);    
         } catch(Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw ((ConstraintViolationException) t);
+                }
+            }
             throw new RuntimeException("Falha ao atualizar o Cliente.");
         }
     }

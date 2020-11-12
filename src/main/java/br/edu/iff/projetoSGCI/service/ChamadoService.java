@@ -1,9 +1,11 @@
 package br.edu.iff.projetoSGCI.service;
 
+import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Chamado;
 import br.edu.iff.projetoSGCI.repository.ChamadoRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +39,7 @@ public class ChamadoService {
     public Chamado findById(Long id){
         Optional<Chamado> result = repo.findById(id);
         if(result.isEmpty()){
-            throw new RuntimeException("Chamado não encontrado pelo ID");
+            throw new NotFoundException("Chamado não encontrado pelo ID");
         }
         return result.get();
     }
@@ -58,6 +60,13 @@ public class ChamadoService {
         try {
             return repo.save(c);    
         } catch(Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw ((ConstraintViolationException) t);
+                }
+            }
             throw new RuntimeException("Falha ao atualizar o Chamado.");
         }
     }

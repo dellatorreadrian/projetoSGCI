@@ -1,9 +1,11 @@
 package br.edu.iff.projetoSGCI.service;
 
+import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Servidor;
 import br.edu.iff.projetoSGCI.repository.ServidorRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +28,7 @@ public class ServidorService {
     public Servidor findById(Long id){
         Optional<Servidor> result = repo.findById(id);
         if(result.isEmpty()){
-            throw new RuntimeException("Servidor não encontrado pelo ID");
+            throw new NotFoundException("Servidor não encontrado pelo ID");
         }
         return result.get();
     }
@@ -41,11 +43,17 @@ public class ServidorService {
     
     public Servidor update(Servidor s){
         Servidor obj = findById(s.getId());
-        
         verificaExclusaoChamadosComServidores(obj);
         try {
             return repo.save(s);    
         } catch(Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw ((ConstraintViolationException) t);
+                }
+            }
             throw new RuntimeException("Falha ao atualizar o Servidor.");
         }
     }

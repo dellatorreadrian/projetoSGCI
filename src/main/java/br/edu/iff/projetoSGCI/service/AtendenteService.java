@@ -1,9 +1,11 @@
 package br.edu.iff.projetoSGCI.service;
 
+import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Atendente;
 import br.edu.iff.projetoSGCI.repository.AtendenteRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,7 @@ public class AtendenteService {
     public Atendente findById(Long id){
         Optional<Atendente> result = repo.findById(id);
         if(result.isEmpty()){
-            throw new RuntimeException("Atendente não encontrado pelo ID");
+            throw new NotFoundException("Atendente não encontrado pelo ID");
         }
         return result.get();
     }
@@ -35,6 +37,13 @@ public class AtendenteService {
         try {
             return repo.save(a);    
         } catch(Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw ((ConstraintViolationException) t);
+                }
+            }
             throw new RuntimeException("Falha ao salvar o Atendente.");
         }
     }
@@ -48,6 +57,13 @@ public class AtendenteService {
             a.setSenha(obj.getSenha());
             return repo.save(a);    
         } catch(Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw ((ConstraintViolationException) t);
+                }
+            }
             throw new RuntimeException("Falha ao atualizar o Atendente.");
         }
     }

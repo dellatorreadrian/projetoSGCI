@@ -1,5 +1,6 @@
 package br.edu.iff.projetoSGCI.service;
 
+import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.InformacaoHistorico;
 import br.edu.iff.projetoSGCI.repository.InformacaoHistoricoRepository;
 import java.util.List;
@@ -26,7 +27,7 @@ public class InformacaoHistoricoService {
     public InformacaoHistorico findById(Long id){
         Optional<InformacaoHistorico> result = repo.findById(id);
         if(result.isEmpty()){
-            throw new RuntimeException("Informacao Historico não encontrado pelo ID");
+            throw new NotFoundException("Informacao Historico não encontrado pelo ID");
         }
         return result.get();
     }
