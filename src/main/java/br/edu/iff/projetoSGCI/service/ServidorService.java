@@ -33,7 +33,17 @@ public class ServidorService {
         return result.get();
     }
     
+    public Servidor findByIp(String ip){
+        Optional<Servidor> result = repo.findByIp(ip);
+        if(result.isEmpty()){
+            throw new NotFoundException("Servidor não encontrado pelo IP");
+        }
+        return result.get();
+    }
+    
     public Servidor save(Servidor s){
+        verificaNomeJaCadastrado(s);
+        verificaIpJaCadastrado(s);
         try {
             return repo.save(s);    
         } catch(Exception e){
@@ -43,7 +53,8 @@ public class ServidorService {
     
     public Servidor update(Servidor s){
         Servidor obj = findById(s.getId());
-        verificaExclusaoChamadosComServidores(obj);
+        verificaNomeJaCadastrado(s);
+        verificaIpJaCadastrado(s);
         try {
             return repo.save(s);    
         } catch(Exception e){
@@ -71,6 +82,20 @@ public class ServidorService {
     private void verificaExclusaoChamadosComServidores(Servidor s){
         if (!s.getChamados().isEmpty()){
             throw new RuntimeException("Não foi possível excluir o Servidor, pois existem Chamados relacionados a ele."); 
+        }
+    }
+    
+    private void verificaNomeJaCadastrado(Servidor s){
+        Optional<Servidor> result = repo.findByNome(s.getNome());
+        if ((!result.isEmpty()) && (result.get().getId() != s.getId())){
+            throw new RuntimeException("Nome já cadastrado."); 
+        }
+    }
+    
+    private void verificaIpJaCadastrado(Servidor s){
+        Optional<Servidor> result = repo.findByIp(s.getIp());
+        if ((!result.isEmpty()) && (result.get().getId() != s.getId())){
+            throw new RuntimeException("IP já cadastrado."); 
         }
     }
 }

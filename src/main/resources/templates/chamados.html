@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+   <head th:replace="~{fragmentos :: imports-css(title='Chamados')}">
+        <title>Chamados</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='chamados')}"/>
+        <div class="container" style="margin-top: 20px">
+            <div class="card-header">
+                <h4>
+                    Chamados Cadastrados
+                    <a class="btn btn-primary float-right" th:href="@{~/chamados/chamado}" role="button"> Novo Chamado </a>
+                </h4>
+            </div>
+            <div class="card" th:each="chamado : ${chamados}">
+                <div class="card-body">
+                    <h5 class="card-title" >
+                        Número de Registro:
+                        <span th:text="${chamado.id}"></span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <span><b>Descrição:</b></span>
+                        <span th:text="${chamado.descricao}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Status:</b></span>
+                        <span th:text="${chamado.status}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b><b>Criticidade:</b></b></span>
+                        <span th:text="${chamado.criticidade}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Servidor:</b></span>
+                        <span th:text="${chamado.servidor.nome}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Cliente:</b></span>
+                        <span th:text="${chamado.cliente.nome}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Atendente:</b></span>
+                        <span th:text="${chamado.atendente.nome}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Data de Abertura:</b></span>
+                        <span th:text="${#calendars.day(chamado.dataAbertura)+'/'+#calendars.month(chamado.dataAbertura)+'/'+#calendars.year(chamado.dataAbertura)+' '+#calendars.hour(chamado.dataAbertura)+':'+#calendars.minute(chamado.dataAbertura)+':'+#calendars.second(chamado.dataAbertura)}"></span>
+                    </div>
+                    <div class="card-text">
+                        <span><b>Prazo:</b></span>
+                        <span th:text="${#calendars.day(chamado.prazo)+'/'+#calendars.month(chamado.prazo)+'/'+#calendars.year(chamado.prazo)+' '+#calendars.hour(chamado.prazo)+':'+#calendars.minute(chamado.prazo)+':'+#calendars.second(chamado.prazo)}"></b></span>
+                    </div>
+                    <div class="card-text" th:if="${chamado.dataEncerramento!=null}">
+                        <span><b>Data de Encerramento:</b></span>
+                        <span th:text="${#calendars.day(chamado.dataEncerramento)+'/'+#calendars.month(chamado.dataEncerramento)+'/'+#calendars.year(chamado.dataEncerramento)+' '+#calendars.hour(chamado.dataEncerramento)+':'+#calendars.minute(chamado.dataEncerramento)+':'+#calendars.second(chamado.dataEncerramento)}"></span>
+                    </div>
+                    <div class="card-text" th:if="${chamado.conclusao!=null}">
+                        <span><b>Conclusão:</b></span>
+                        <span th:text="${chamado.conclusao}"></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a th:href="@{~/chamados/{idChamado}/adicionarInfo (idChamado=${chamado.id})}" class="btn btn-secondary">Adicionar Informação</a>
+                    <a th:href="@{'~/chamados/chamado/'+${chamado.id}}" class="btn btn-warning">Editar</a>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragmentos :: imports-js}"/>
+    </body>
+</html>

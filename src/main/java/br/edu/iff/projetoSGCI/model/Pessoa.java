@@ -34,7 +34,7 @@ public abstract class Pessoa implements Serializable{
     
     @NotBlank(message = "Nome obrigatório.")
     @Length(max=50, message = "Nome deve possuir no máximo 50 caracteres.")
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 5, unique = true)
     private String nome;
 
     

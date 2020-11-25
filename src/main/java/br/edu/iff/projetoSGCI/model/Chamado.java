@@ -40,7 +40,7 @@ public class Chamado implements Serializable {
     @Column(nullable = false, length = 350, updatable = false)
     private String descricao;
 
-    @Length(max=350, message = "Conclusão deve possuir no máximo 10 caracteres.")
+    @Length(max=350, message = "Conclusão deve possuir no máximo 350 caracteres.")
     @Column(length = 350, updatable = false)
     private String conclusao;
     

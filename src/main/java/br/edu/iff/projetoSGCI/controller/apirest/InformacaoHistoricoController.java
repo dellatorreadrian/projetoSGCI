@@ -1,4 +1,4 @@
-package br.edu.iff.projetoSGCI.controller;
+package br.edu.iff.projetoSGCI.controller.apirest;
 
 import br.edu.iff.projetoSGCI.model.InformacaoHistorico;
 import br.edu.iff.projetoSGCI.service.InformacaoHistoricoService;

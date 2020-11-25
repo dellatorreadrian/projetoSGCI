@@ -2,6 +2,7 @@ package br.edu.iff.projetoSGCI.service;
 
 import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Cliente;
+import br.edu.iff.projetoSGCI.model.Pessoa;
 import br.edu.iff.projetoSGCI.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,7 @@ public class ClienteService {
     }
     
     public Cliente save(Cliente c){
+        verificaNomeJaCadastrado(c);
         try {
             return repo.save(c);    
         } catch(Exception e){
@@ -44,7 +46,7 @@ public class ClienteService {
     public Cliente update(Cliente c, String senhaAtual, String novaSenha, String confirmarNovaSenha){
         Cliente obj = findById(c.getId());
         alterarSenha(obj,senhaAtual,novaSenha,confirmarNovaSenha);
-        verificaExclusaoChamadosComClientes(obj);
+        verificaNomeJaCadastrado(c);
         try {
             c.setLogin(obj.getLogin());
             c.setSenha(obj.getSenha());
@@ -76,6 +78,14 @@ public class ClienteService {
             throw new RuntimeException("Não foi possível excluir o Cliente, pois existem Chamados relacionados a ele."); 
         }
     }
+    
+    private void verificaNomeJaCadastrado(Cliente c){
+        Optional<Pessoa> result = repo.findByNome(c.getNome());
+        if ((!result.isEmpty()) && (result.get().getId() != c.getId())){
+            throw new RuntimeException("Nome já cadastrado."); 
+        }
+    }
+    
     
     private void alterarSenha(Cliente obj, String senhaAtual, String novaSenha, String confirmarNovaSenha){
         if(!senhaAtual.isBlank() && !novaSenha.isBlank() && !confirmarNovaSenha.isBlank()){

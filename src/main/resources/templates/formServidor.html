@@ -1,0 +1,47 @@
+<html>
+    <head th:replace="~{fragmentos :: imports-css(title='Servidores')}">
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='servidores')}"/>
+        <div class="container" style="width: 60%; margin-top: 20px">
+            <div class="card-header"> 
+                <h4>Cadastro de Servidores
+                    <a class="btn btn-primary float-right" th:href="@{~/servidores}" role="button">voltar</a>
+                </h4>
+            </div>
+            
+            <div th:replace="~{fragmentos :: mensagens}"/>
+            
+            <form th:object="${servidor}" th:action="@{~/servidores/servidor/{id}(id=${servidor.id})}" method="post" class="card-body">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-row">
+                    <div class="form-group" col-md-8>
+                        <label for="nome">Nome:</label>
+                        <input th:field="*{nome}" type="text" class="form-control" placeholder="Nome" required="required" maxlength="20"/>
+                    </div>
+                    
+                    <div class="form-group" col-md-4>
+                        <label for="ip">IP:</label>
+                        <input th:field="*{ip}" type="text" class="form-control" placeholder="Digite o IP" required="required" maxlength="20"/>
+                    </div>
+                </div>
+                    
+                <div class="form-row">
+                    <div class="form-group" col-md-12>
+                        <label for="status">Status:</label>
+                        <select class="form-control form-control-sm" th:field="*{status}" required="required">
+                            <option th:each="s: ${status}" th:value="${s}" th:text="${s}">content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-success" value="salvar"/>
+                </div>
+            </form>
+        </div>
+        <div th:replace="~{fragmentos :: imports-js}"/>
+    </body>
+</html>

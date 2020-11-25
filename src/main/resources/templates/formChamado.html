@@ -1,0 +1,83 @@
+<html>
+    <head th:replace="~{fragmentos :: imports-css(title='Chamados')}">
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='chamados')}"/>
+        <div class="container" style="width: 60%; margin-top: 20px">
+            <div class="card-header"> 
+                <h4>Cadastro de Chamados
+                    <a class="btn btn-primary float-right" th:href="@{~/chamados}" role="button">voltar</a>
+                </h4>
+            </div>
+            
+            <div th:replace="~{fragmentos :: mensagens}"/>
+            
+            <form th:object="${chamado}" th:action="@{~/chamados/chamado/{id}(id=${chamado.id})}" method="post" class="card-body">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-row" th:if="${id==null}">
+                    <div class="form-group" col-md-8>
+                        <label for="descricao">Descrição:</label>
+                        <input th:field="*{descricao}" type="text" class="form-control" placeholder="Descrição" required="required" maxlength="350"/>
+                    </div>
+                    
+                    <div class="form-group" col-md-4>
+                        <label for="criticidade">Criticidade:</label>
+                        <select class="form-control form-control-sm" th:field="*{criticidade}" required="required">
+                            <option th:each="c: ${criticidade}" th:value="${c}" th:text="${c}">content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" col-md-6>
+                        <label for="atendente">Atendente:</label>
+                        <select class="form-control form-control-sm" th:field="*{atendente.id}" required="required">
+                            <option th:each="a: ${atendentes}" th:value="${a.id}" th:text="${a.nome}">content</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" col-md-6 th:if="${id==null}">
+                        <label for="clientes">Cliente:</label>
+                        <select class="form-control form-control-sm" th:field="*{cliente.id}" required="required">
+                            <option th:each="c: ${clientes}" th:value="${c.id}" th:text="${c.nome}">content</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row" th:if="${statusChamado=='ENCERRADO'}">
+                    <div class="form-group" col-md-8 >
+                        <label for="conclusao">Conclusão:</label>
+                        <input th:field="*{conclusao}" type="text" class="form-control" placeholder="Conclusão" required="required" maxlength="350"/>
+                    </div>
+                    
+                    <div class="form-group" col-md-8 >
+                        <label for="dataEncerramento">Data de Encerramento:</label>
+                        <input th:field="*{dataEncerramento}" type="text" class="form-control" placeholder="Data de Encerramento" required="required" maxlength="350"/>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group" col-md-6>
+                        <label for="statusChamado">Status:</label>
+                        <select class="form-control form-control-sm" th:field="*{status}" required="required">
+                            <option th:each="s: ${statusChamado}" th:value="${s}" th:text="${s}">content</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" col-md-6 th:if="${id==null}">
+                        <label for="servidores">Servidor:</label>
+                        <select class="form-control form-control-sm" th:field="*{servidor.id}" required="required">
+                            <option th:each="sr: ${servidores}" th:value="${sr.id}" th:text="${sr.nome}">content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-success" value="salvar"/>
+                </div>
+            </form>
+        </div>
+        <div th:replace="~{fragmentos :: imports-js}"/>
+    </body>
+</html>

@@ -1,8 +1,7 @@
+package br.edu.iff.projetoSGCI.controller.apirest;
 
-package br.edu.iff.projetoSGCI.controller;
-
-import br.edu.iff.projetoSGCI.model.Cliente;
-import br.edu.iff.projetoSGCI.service.ClienteService;
+import br.edu.iff.projetoSGCI.model.Servidor;
+import br.edu.iff.projetoSGCI.service.ServidorService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/apirest/clientes")
-public class ClienteController {
+@RequestMapping(path = "/apirest/servidores")
+public class ServidorController {
     @Autowired
-    private ClienteService service;
+    private ServidorService service;
     
     @GetMapping
     public ResponseEntity getAll(
@@ -36,16 +35,16 @@ public class ClienteController {
     }
     
     @PostMapping
-    public ResponseEntity save(@Valid @RequestBody Cliente cliente){
-        cliente.setId(null);
-        service.save(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+    public ResponseEntity save(@Valid @RequestBody Servidor servidor){
+        servidor.setId(null);
+        service.save(servidor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(servidor);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Cliente cliente){
-        cliente.setId(id);
-        service.update(cliente,"","","");
+    public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Servidor servidor){
+        servidor.setId(id);
+        service.update(servidor);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
@@ -53,15 +52,5 @@ public class ClienteController {
     public ResponseEntity delete(@PathVariable("id") Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
-    }
-    
-    @PutMapping("/{id}/alterarSenha")
-    public ResponseEntity alterarSenha(@PathVariable("id") Long id,
-            @RequestParam(name = "senhaAtual", defaultValue = "", required = true) String senhaAtual,
-            @RequestParam(name = "novaSenha", defaultValue = "", required = true) String novaSenha,
-            @RequestParam(name = "confirmarNovaSenha", defaultValue = "", required = true) String confirmarNovaSenha){
-        Cliente cliente = service.findById(id);
-        service.update(cliente,"senhaAtual","novaSenha","confirmarNovaSenha");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

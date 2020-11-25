@@ -1,7 +1,8 @@
-package br.edu.iff.projetoSGCI.controller;
 
-import br.edu.iff.projetoSGCI.model.Atendente;
-import br.edu.iff.projetoSGCI.service.AtendenteService;
+package br.edu.iff.projetoSGCI.controller.apirest;
+
+import br.edu.iff.projetoSGCI.model.Cliente;
+import br.edu.iff.projetoSGCI.service.ClienteService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/apirest/atendentes")
-public class AtendenteController {
+@RequestMapping(path = "/apirest/clientes")
+public class ClienteController {
     @Autowired
-    private AtendenteService service;
+    private ClienteService service;
     
     @GetMapping
     public ResponseEntity getAll(
@@ -35,16 +36,16 @@ public class AtendenteController {
     }
     
     @PostMapping
-    public ResponseEntity save(@Valid @RequestBody Atendente atendente){
-        atendente.setId(null);
-        service.save(atendente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(atendente);
+    public ResponseEntity save(@Valid @RequestBody Cliente cliente){
+        cliente.setId(null);
+        service.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody Atendente atendente){
-        atendente.setId(id);
-        service.update(atendente,"","","");
+    public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Cliente cliente){
+        cliente.setId(id);
+        service.update(cliente,"","","");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
@@ -59,8 +60,8 @@ public class AtendenteController {
             @RequestParam(name = "senhaAtual", defaultValue = "", required = true) String senhaAtual,
             @RequestParam(name = "novaSenha", defaultValue = "", required = true) String novaSenha,
             @RequestParam(name = "confirmarNovaSenha", defaultValue = "", required = true) String confirmarNovaSenha){
-        Atendente atendente = service.findById(id);
-        service.update(atendente,"senhaAtual","novaSenha","confirmarNovaSenha");
+        Cliente cliente = service.findById(id);
+        service.update(cliente,"senhaAtual","novaSenha","confirmarNovaSenha");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

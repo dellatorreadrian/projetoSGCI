@@ -27,12 +27,12 @@ public class Servidor implements Serializable{
     
     @NotBlank(message = "Nome obrigatório.")
     @Length(max=20, message = "Nome deve possuir no máximo 20 caracteres.")
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String nome;
     
     @NotBlank(message = "IP obrigatório.")
     @Length(max=20, message = "IP deve possuir no máximo 20 caracteres.")
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String ip;
     
     @NotNull(message = "Login obrigatório.")

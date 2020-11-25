@@ -2,6 +2,7 @@ package br.edu.iff.projetoSGCI.service;
 
 import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Atendente;
+import br.edu.iff.projetoSGCI.model.Pessoa;
 import br.edu.iff.projetoSGCI.repository.AtendenteRepository;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,7 @@ public class AtendenteService {
     }
     
     public Atendente save(Atendente a){
+        verificaNomeJaCadastrado(a);
         try {
             return repo.save(a);    
         } catch(Exception e){
@@ -51,7 +53,7 @@ public class AtendenteService {
     public Atendente update(Atendente a, String senhaAtual, String novaSenha, String confirmarNovaSenha){
         Atendente obj = findById(a.getId());
         alterarSenha(obj,senhaAtual,novaSenha,confirmarNovaSenha);
-        verificaExclusaoChamadosComAtendentes(obj);
+        verificaNomeJaCadastrado(a);
         try {
             a.setLogin(obj.getLogin());
             a.setSenha(obj.getSenha());
@@ -81,6 +83,13 @@ public class AtendenteService {
     private void verificaExclusaoChamadosComAtendentes(Atendente a){
         if (!a.getChamados().isEmpty()){
             throw new RuntimeException("Não foi possível excluir o Atendente, pois existem Chamados relacionados a ele."); 
+        }
+    }
+    
+    private void verificaNomeJaCadastrado(Atendente a){
+        Optional<Pessoa> result = repo.findByNome(a.getNome());
+        if ((!result.isEmpty()) && (result.get().getId() != a.getId())){
+            throw new RuntimeException("Nome já cadastrado."); 
         }
     }
     

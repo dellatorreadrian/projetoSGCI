@@ -3,6 +3,8 @@ package br.edu.iff.projetoSGCI.service;
 import br.edu.iff.projetoSGCI.exception.NotFoundException;
 import br.edu.iff.projetoSGCI.model.Chamado;
 import br.edu.iff.projetoSGCI.repository.ChamadoRepository;
+import static java.sql.DriverManager.println;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.ConstraintViolationException;
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Service;
 public class ChamadoService {
     @Autowired
     private ChamadoRepository repo;
+    
+    public List<Chamado> findAll(){
+        return repo.findAll();
+    }
     
     public List<Chamado> findAll(int page, int size){
         Pageable p = PageRequest.of(page, size);
@@ -46,6 +52,17 @@ public class ChamadoService {
     
     public Chamado save(Chamado c){
         try {
+            c.setDataAbertura(Calendar.getInstance());
+            Calendar prazo = Calendar.getInstance();
+            if (c.getCriticidade().equals("BAIXA")){
+                prazo.add(Calendar.DATE, 3);
+            } else if (c.getCriticidade().equals("MEDIA")){
+                prazo.add(Calendar.DATE, 2);
+            } else {
+                prazo.add(Calendar.DATE, 1);
+            }
+            c.setPrazo(prazo);
+            removeObjetosNulos(c);
             return repo.save(c);    
         } catch(Exception e){
             throw new RuntimeException("Falha ao salvar o Chamado.");
@@ -72,4 +89,8 @@ public class ChamadoService {
     }
     
     // Chamado não pode ser excluído.
+    
+    public void removeObjetosNulos(Chamado chamado){
+        println(chamado.getAtendente().getNome()+" NOMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+    }
 }

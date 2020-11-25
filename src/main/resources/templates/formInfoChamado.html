@@ -1,0 +1,43 @@
+<html>
+    <head th:replace="~{fragmentos :: imports-css(title='Informações de Chamado')}">
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='chamados')}"/>
+        <div class="container" style="width: 60%; margin-top: 20px">
+            <div class="card-header"> 
+                <h4>Cadastro de Informações de Chamado
+                    <a class="btn btn-primary float-right" th:href="@{~/chamados}" role="button">voltar</a>
+                </h4>
+            </div>
+            
+            <div th:replace="~{fragmentos :: mensagens}"/>
+            
+            <form th:object="${infoChamado}" th:action="@{~/chamados/chamado/{id}(id=${infoChamado.id})}" method="post" class="card-body">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{data}" value="${#calendars.createNow()}"/>
+                <div class="form-row">
+                    <div class="form-group" col-md-12>
+                        <label for="texto">Texto:</label>
+                        <input th:field="*{texto}" type="text" class="form-control" placeholder="Texto" required="required" maxlength="350"/>
+                    </div>
+                </div>
+                    
+                <div class="form-row">
+                    <div class="form-group" col-md-12>
+                        <label for="atendente">Atendente:</label>
+                        <select class="form-control form-control-sm" th:field="*{atendente.nome}" required="required">
+                            <option th:each="a: ${atendentes}" th:value="${a.nome}" th:text="${a.nome}">content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-success" value="salvar"/>
+                </div>
+            </form>
+        </div>
+        <div th:replace="~{fragmentos :: imports-js}"/>
+    </body>
+</html>

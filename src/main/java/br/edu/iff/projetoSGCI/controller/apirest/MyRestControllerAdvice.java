@@ -1,4 +1,4 @@
-package br.edu.iff.projetoSGCI.controller;
+package br.edu.iff.projetoSGCI.controller.apirest;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
